@@ -1,0 +1,44 @@
+from movie import Movie
+
+
+class movieDatabase:
+    def __init__(self):
+        self.__allDatabase = []
+
+    def addMovie(self, title, year):
+        """
+        check to see if the movie exist or not if it does raise KeyError but it does not append it to the list
+        :param title: title of the movie
+        :param year: year it was released
+        :return:
+        """
+        for movie in range(len(self.__allDatabase)):
+            if self.__allDatabase[movie].getTitle() == title and self.__allDatabase[movie].getYear() == year:
+                raise KeyError(
+                    "{} made in {} is already stored in the database and ia a duplicate.".format(title, year))
+
+        self.__allDatabase.append(Movie(title, year))
+
+    def findMovie(self, title, year):
+        """
+        look through the list and see if the movie exist if it does return that movie or return None
+        :param title: title of the movie
+        :param year: year it was released
+        :return: None or the movie that we are looking for
+        """
+        for idx_movie in range(len(self.__allDatabase)):
+            if self.__allDatabase[idx_movie].getTitle() == title and self.__allDatabase[idx_movie].getYear() == year:
+                return self.__allDatabase[idx_movie]
+
+        return None
+
+    def showAll(self):
+        """
+        use lambda to sort the Title and year and add print the short Review
+        :return: None
+        """
+        self.__allDatabase.sort(key=lambda x: x.getYear())
+        self.__allDatabase.sort(key=lambda x: x.getTitle())
+
+        for movie in self.__allDatabase:
+            print(movie.shortReview())
